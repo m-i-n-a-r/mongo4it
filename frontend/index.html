@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!-- Using multiple languages is possible, but the page is english only atm -->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Title in the browser tab -->
+  <title>MonGO4it</title>
+  <!-- Description used when the site is added to favorites -->
+  <meta name="description" content="MonGO4it official site.">
+  <meta name="author" content="MonGO4it" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- This attribute controls the Chrome action bar color on mobile devices -->
+  <meta name="theme-color" content="#000000">
+  <!-- Css files involved, including the local css and FontAwesome v5 -->
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+  <noscript>
+    <link rel="stylesheet" href="assets/css/noscript.css" />
+  </noscript>
+</head>
+
+<body>
+
+  <!-- Particles.js container used as a background. Removing it removes the particles -->
+  <div id="particles-js"></div>
+  <!-- Wrapper -->
+  <div id="wrapper">
+
+    <!-- Header - a logo, a short sentence -->
+    <header id="header" class="alt">
+      <span class="logo"><img src="images/logo.png" alt="" /></span>
+      <p>Conosci i rischi, arriva a destinazione</p>
+      </section>
+    </header>
+
+    <!-- Nav - navbar of contents, used in the desktop version -->
+    <nav id="nav">
+      <ul>
+        <li><a href="#intro" class="active">Obiettivo e applicazioni</a></li>
+        <li><a href="#crash">Crash Likelihood</a></li>
+        <li><a href="#enrich">Data enrichment</a></li>
+        <li><a href="#info">Info</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main - the "white part" -->
+    <div id="main">
+
+      <!-- Introduction -->
+      <section id="intro" class="main special">
+        <div class="spotlight">
+          <div class="content">
+            <header class="major">
+              <h2><b>OBIETTIVO E APPLICAZIONI</b></h2>
+            </header>
+            <p id="purp"></p>
+          </div>
+          <span class="image"><img src="images/profile.png" alt="" /></span>
+        </div>
+      </section>
+
+      <!-- Charts and data -->
+      <section id="crash" class="main special">
+        <header class="major">
+          <h2><b>CRASH LIKELIHOOD</b></h2>
+        </header>
+
+        <!-- Other entries can be added to the list. The icons are from FontAwesome v5 -->
+        <div>
+          QUI VANNO I GRAFICI E IL TOOL DI CALCOLO DI PROBABILITA' DI <strong>INCIDENTE</strong><br><br><br><br><br><br>
+        </div>
+
+        <!-- Data enrichment startegies -->
+        <section id="enrich" class="main special">
+          <header class="major">
+            <h2><b>DATA ENRICHMENT</b></h2>
+            <p>I dati possono essere arricchiti e poi bho scriviamo altre cose</p>
+          </header>
+
+          <!-- A small description, an image and a link. Nothing more. Other entries can be added -->
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h3><b>Dati Luce Verde</b></h3>
+              </header>
+              <div>
+                <span class="image-small"><img src="images/luce_verde.png" alt="" /></span>
+                <p>
+                  Usiamo i dati di luce verde per arricchire quelli del comune di Roma
+                </p>
+              </div>
+              <a href="https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF40390" class="button small"
+                target="_blank">Maggiori informazioni</a>
+            </div>
+          </div>
+
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h3><b>Sunset API</b></h3>
+              </header>
+              <div>
+                <span class="image-small"><img src="images/sunset.png" alt="" /></span>
+                <p>
+                  Semplici API per reperire l'orario di alba e tramonto
+                </p>
+              </div>
+              <a href="https://sunrise-sunset.org/api" class="button small" target="_blank">Maggiori informazioni</a>
+            </div>
+          </div>
+
+          <!-- Image-less project entry -->
+          <div class="spotlight">
+            <div class="content-short">
+              <h3><b>Open source!</b></h3>
+              <p class="short">
+                Il lavoro fatto fino a questo momento è completamente open source, ed è reperibile
+                <strong><a href="https://github.com/m-i-n-a-r/mongo4it" target="_blank">qui</a></strong>!
+                Alcune parti del codice potrebbero essere ancora in corso di aggiornamento!
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- More info -->
+        <section id="info" class="main special">
+          <header class="major">
+            <h2><b>INFORMAZIONI E NUMERI</b></h2>
+            <p>Abbiamo preso, trasformato e caricato tutti i dati disponibili, limitandoci come caso di studio a Roma.
+              In questa sezione si trova qualche numero e i dettagli sul team MonGO.
+            </p>
+          </header>
+          <!-- Some statistics, to highlight particular numbers. Other numbers can be added to the list -->
+          <ul class="statistics">
+            <li class="style2">
+              <span class="icon fas fa-code"></span>
+              <strong>5</strong>API utilizzate
+            </li>
+            <li class="style1">
+              <span class="icon fas fa-download"></span>
+              <strong>+150.000</strong>Incidenti caricati
+            </li>
+            <li class="style2">
+              <span class="icon fas fa-calendar-check"></span>
+              <strong id="experience">2</strong>Giorni di sviluppo
+            </li>
+          </ul>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <section>
+        <h2>Informazioni aggiuntive</h2>
+        <p>Siamo un team di sette persone costituto casualmente nell'ambito dell'Hackaton
+          MongoDBxSogei di marzo 2022. Proveniamo da aree ed esperienze completamente diverse fra loro,
+          e ci siamo completati a vicenda nella realizzazione di questo progetto e dell'idea alla sua base
+        </p>
+      </section>
+      <section>
+        <h2>L'Hackaton</h2>
+        <!-- Additional information -->
+        <dl class="alt">
+          <dt>Team</dt>
+          <dd>Gianluca Conti, Stefania Gigantiello, Carmen Laganà, Mirko Palluzzi, Michele Piazzola, Ramona Reppucci,
+            Marco Scarlino</dd>
+          <dt>Città</dt>
+          <dd>Roma, Italia</dd>
+          <dt>Periodo</dt>
+          <dd>16-17-18 marzo 2022</dd>
+        </dl>
+      </section>
+      <p class="copyright">Copyright &copy; <span id="year"></span> MonGO!</p>
+    </footer>
+  </div>
+
+
+  <!-- Scripts - some arent't used, but could be useful -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrollex.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    // Variables to change to correctly generate some informations dinamically
+    date = new Date();
+    year = date.getFullYear();
+
+    // Assign the current year to the copyright line
+    document.getElementById('year').innerHTML = year;
+
+    // The initial description. It is meant to be modified freely
+    purposes = "Lo scopo del progetto è offrire un caso di studio su come implementare un algoritmo di <b>data enrichment</b> " +
+      "per combinare e validare più fonti di dati relativamente agli <b>incidenti</b> in una data città (in questo caso <b>Roma</b>) " +
+      "così da arrivare a stimare una <b>probabilità media di incidente</b> in base a un set di condizioni impostate dall'utente.\n" +
+      "L'applicazione finale di questo caso di studio è un'applicazione mobile, realizzabile ad esempio in <b>Flutter</b> ed " +
+      "embeddabile all'interno dell'<b>infontainment</b> delle automobili stesse, " +
+      "che permetta tramite geolocalizzazione di stimare le probabilità di incidente su un determinato percorso o su diversi " +
+      "percorsi alternativi, avvertendo in modo proattivo l'utilizzatore quando si trova in <b>situazioni di rischio</b>.";
+
+    // Assign the description to the correct html element, given its id 
+    document.getElementById('purp').innerHTML = purposes;
+  </script>
+
+</body>
+
+</html>
