@@ -42,9 +42,66 @@ function createGraph(data){
       type: 'circle',
       source: {
         type: 'geojson',
-        data: {
-            "type": "FeatureCollection",
-            "features": [{'NUM_FERITI':5,"geopoint":{"type":"Point","coordinates":[12.5095,41.895]},"intensity":"6230ba078933fcb852757df4"},{'NUM_FERITI':0,"geopoint":{"type":"Point","coordinates":[12.5095,41.895]},"intensity":"6230ba078933fcb852757df5"}]
+        data: 
+            {
+                "type": "FeatureCollection",
+                "features": [{
+                  "type": "Feature",
+                  "properties": {
+                    "Injured": 1,
+                    "Killed": 0,
+                    "Factor1": "Unspecified",
+                    "Hour": 18,
+                    "Day": "Fri",
+                    "Casualty": 1
+                  },
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.9066122, 40.7453924]
+                  }
+                }, {
+                  "type": "Feature",
+                  "properties": {
+                    "Injured": 0,
+                    "Killed": 0,
+                    "Factor1": "Unspecified",
+                    "Hour": 19,
+                    "Day": "Fri",
+                    "Casualty": 0
+                  },
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.8427393, 40.8794247]
+                  }
+                }, {
+                  "type": "Feature",
+                  "properties": {
+                    "Injured": 0,
+                    "Killed": 0,
+                    "Factor1": "Outside Car Distraction",
+                    "Hour": 19,
+                    "Day": "Fri",
+                    "Casualty": 0
+                  },
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.9313269, 40.6605938]
+                  }
+                }, {
+                  "type": "Feature",
+                  "properties": {
+                    "Injured": 0,
+                    "Killed": 0,
+                    "Factor1": "Unspecified",
+                    "Hour": 19,
+                    "Day": "Fri",
+                    "Casualty": 0
+                  },
+                  "geometry": {
+                    "type": "Point",
+                    "coordinates": [-73.8703694, 40.7334973]
+                  }
+                }]
         }
       },
       paint: {
