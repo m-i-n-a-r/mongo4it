@@ -5,7 +5,7 @@ body {
   }
   
   #map {
-    position: relative;
+    position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
@@ -22,6 +22,11 @@ body {
     margin-bottom: 10px;
   }
   
+  a {
+    text-decoration: none;
+    color: #2dc4b2;
+  }
+  
   #console {
     position: absolute;
     width: 240px;
@@ -29,7 +34,6 @@ body {
     padding: 10px 20px;
     background-color: white;
   }
-  
   .session {
     margin-bottom: 20px;
   }
@@ -48,4 +52,13 @@ body {
     width: 15%;
     display: inline-block;
     text-align: center;
+  }
+
+  .marker {
+    background-image: url('mongo.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
   }

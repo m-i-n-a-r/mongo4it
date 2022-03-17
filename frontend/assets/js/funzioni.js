@@ -1,3 +1,7 @@
+$.ready(function(){
+	countIncidenti();
+});
+
 function countIncidenti() {
   $.ajax({
     method: "POST",
@@ -9,6 +13,8 @@ function countIncidenti() {
   .done(function(response) {
 	  if (response == null) return '';
 	  response = $.parseJSON(response);
-	  $('#tot_incidenti').append(response.count);
+	  $('#tot_incidenti').html(response.count);
   });
 }
+
+setInterval(countIncidenti, 10000);

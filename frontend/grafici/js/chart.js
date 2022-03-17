@@ -7,6 +7,25 @@ const map = new mapboxgl.Map({
   });
 
 
+  
+  
+  function mia_posizione(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    const el = document.createElement('div');
+  el.className = 'marker';
+  alert(el)
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat([lat, lon]).addTo(map);
+
+  }
+
+ 
+
+
+
+
+
   var queryChartMap = JSON.stringify({
     "collection": "Incidente_Geo_Distinct",
     "database": "Hackaton",
@@ -175,7 +194,11 @@ function createGraph(data){
     
     console.log('fine map');
 
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(mia_posizione);
+    }else{
+      alert('La geo-localizzazione NON è possibile');
+    }
     
     
 
