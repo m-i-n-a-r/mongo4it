@@ -5,11 +5,11 @@ const map = new mapboxgl.Map({
     center: [12.4963655, 41.9027835], // initial map center in [lon, lat]
     zoom: 10
   });
-
-function error(){
-
   var lon = 12.4963655;
   var lat = 41.9027835;
+function error(){
+
+  
   maximumLon = 12.55 
   minimumLon = 12.33 
   maximumLat = 42 
@@ -21,11 +21,49 @@ function error(){
   position.coords.longitude = Math.random() * (maximumLon - minimumLon)+ minimumLon ;
   mia_posizione(position)
 }
+function GetSelectedValue(selectItem)
+{
+    var index = document.getElementById(selectItem).selectedIndex;
+  return document.getElementById(selectItem).value;
+}
+
+function rischio(){
+  ora = document.getElementById('slider').value;
+  giorno = document.getElementById('filters').value;
+
+
+
+
+
+  meteoS =GetSelectedValue('meteoS');
+  if(!meteoS || meteoS == "All"){
+    meteoS = "Sereno"
+  }
+
+  giornoBool = giorno == 'Feriali';
   
-  
+  App.getCalcoloAlert(lon, lat, giornoBool, ora, meteoS).then((data) => {
+    // const allIncidenti = data.documents
+    console.log("Prova", data)
+     document.getElementById('pippo').innerHTML=data;
+    // const totaleIncidenti = allIncidenti.length;
+    // console.log("Prova: ", allIncidenti)
+})
+}
+
+
   function mia_posizione(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
+     lat = position.coords.latitude;
+     lon = position.coords.longitude;
+
+
+     rischio()
+
+
+
+  
+
+
 
     const geojson = {
       'type': 'FeatureCollection',
@@ -187,6 +225,7 @@ function createGraph(data){
     });
 
     document.getElementById('slider').addEventListener('input', (event) => {
+      rischio()
       const hour = parseInt(event.target.value);
       // update the map
       filterHour = ['==', ['number', ['get', 'Ora']], hour];
@@ -200,6 +239,7 @@ function createGraph(data){
       document.getElementById('active-hour').innerText = hour12 + ampm;
     });
     document.getElementById('hourNone').addEventListener('click', (event) => {
+      rischio()
       const checked = event.target.checked;
       // update the map
       if(checked){
@@ -213,6 +253,7 @@ function createGraph(data){
       map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
     });
     document.getElementById('filters').addEventListener('change', (event) => {
+      rischio()
       const day = event.target.value;
       if (day === 'all') {
         filterDay = ['!=', ['number', ['get', 'Giorno']], 0];
@@ -226,14 +267,23 @@ function createGraph(data){
       map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
     });
     document.getElementById('years').addEventListener('change', (event) => {
+      rischio()
       year = event.target.value;
       year = parseInt(year);
       filterYear = ['==', ['number', ['get', 'Anno']], year];
       map.setFilter('collisions', ['all', filterHour, filterDay, filterYear]);
     });
-    document.getElementById('meteo').addEventListener('change', (event) => {
+    document.getElementById('meteoS').addEventListener('change', (event) => {
       meteo = event.target.value;
-      filterMeteo = ['==', ['string', ['get', 'Meteo']], meteo];
+      alert('ciao'+meteo)
+      if(meteo == 'All'){
+        filterMeteo = ['!=', ['string', ['get', 'Meteo']], "pippo"];
+      }
+      else{
+        filterMeteo = ['==', ['string', ['get', 'Meteo']], meteo];
+        alert(filterMeteo)
+      }
+      
       map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
     });
     

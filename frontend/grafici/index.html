@@ -11,11 +11,13 @@
 </head>
 <body>
     <div id='map'></div>
+    <div id='marker'></div>
     <div id='console'>
-      <h1>Motor vehicle collisions</h1>
-      <p>Data: <a href='https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95'>Motor vehicle collision injuries and deaths</a> in NYC, Jan 2016</p>
+      <h1>Incidenti stradali</h1>
+      
+    <div id='pippo'></div>
       <div class='session'>
-        <h2>Casualty</h2>
+        <h2>Persone lese</h2>
         <div class='row colors'>
         </div>
         <div class='row labels'>
@@ -28,23 +30,23 @@
         </div>
       </div>
       <div class='session' id='sliderbar'>
-        <h2>Hour: <label id='active-hour'>12PM</label></h2>
+        <h2>Orario: <label id='active-hour'>12PM</label></h2>
         <input id='slider' class='row' type='range' min='0' max='23' step='1' value='12' />
         <input type="checkbox" id="hourNone"/><label id='hourNone'>Tutte le ore</label>
       </div>
       <div class='session'>
-        <h2>Day of the week</h2>
+        <h2>Giornata</h2>
         <div class='row' id='filters'>
           <input id='all' type='radio' name='day' value='all' checked='checked'>
-          <label for='all'>All</label>
+          <label for='all'>Tutti</label>
           <input id='weekday' type='radio' name='day' value='weekday'>
-          <label for='weekday'>Weekday</label>
+          <label for='weekday'>Feriali</label>
           <input id='weekend' type='radio' name='day' value='weekend'>
-          <label for='weekend'>Weekend</label>
+          <label for='weekend'>Festivi</label>
         </div>
       </div>
       <div class='session'>
-        <h2>Year</h2>
+        <h2>Anno</h2>
         <div class='row' id='years'>
           <input id='all' type='radio' name='toggle' value='all' checked='checked'>
           <label for='all'>All</label>
@@ -54,13 +56,15 @@
           <label for='2020'>2020</label>
           <input id='2021' type='radio' name='toggle' value='2021'>
           <label for='2021'>2021</label>
+          <input id='2021' type='radio' name='toggle' value='2022'>
+          <label for='2021'>2022(dati RealTime)</label>
         </div>
       </div>
       <div class='session'> 
         <h2>Meteo</h2>
         <div class='row' id='meteo'>
-          <select name="meteoS">
-            <option value="All">All</option>
+          <select name="meteoS" id="meteoS">
+            <option value="All">Tutti</option>
             <option value="Foschia">Foschia</option>
             <option value="Vento forte">Vento forte</option>
             <option value="Sole radente">Sole radente</option>
@@ -71,6 +75,11 @@
             <option value="Grandine in atto">Grandine in atto</option>
           </select>
         </div>
+        <div class='session'> 
+          <h2>Loc</h2>
+          <div class='row' id='meteo'>
+            <input type="button" id="loc" onclick="error()">
+          </div>
       </div>
     </div>
   </div>
@@ -78,4 +87,5 @@
 <script src="./node_modules/axios/dist/axios.js"></script>
 <script src="./js/javascript.js"></script>
 <script src="./js/chart.js"></script>
+<script src="./js/calcoliAlert.js"></script>
 </html>

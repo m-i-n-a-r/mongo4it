@@ -14,14 +14,15 @@ var mediaIncidentiRomaFestivi = Math.round(totIncidentiFestivi / giorniFestivi, 
 App = { 
 
     getCalcoloAlert : async (lat, long, flgFeriale, orario, clima) => {
+alert('lat:'+lat+' long:'+long+' flgFeriale:'+flgFeriale+'orario:'+orario+' clima:'+clima);
 
+        orario = parseInt(orario);
         if (flgFeriale) {
-        
             var queryMediaRoma = JSON.stringify({
                 "collection": "Incidente_Geo_Distinct",
                 "database": "Hackaton",
                 "dataSource": "demo",
-                "filter": { $and : [{geoPoint :
+                "filter": { $and : [{"geoPoint" :
                     { $near :
                     {
                         $geometry : {
@@ -29,9 +30,9 @@ App = {
                             coordinates : [lat, long] },
                         $maxDistance : 1000
                     }
-                    }}, {dayOfWeek: { $gte : 1, $lte : 5 }}, 
-                    {ora: { $gte : orario - 1, $lte : orario + 1 }}, 
-                    {CondizioneAtmosferica:clima}
+                    }}, {"dayOfWeek": { $gt : 1 , $lt : 7}}, 
+                    {ora: { $gte : orario - 1, $lte : orario + 1 }},
+                    {CondizioneAtmosferica: clima}
                 ]
                 }
             });
@@ -48,9 +49,9 @@ App = {
                             coordinates : [lat, long] },
                         $maxDistance : 1000
                     }
-                    }}, {dayOfWeek: { $gte : 6 }}, 
-                    {ora: { $gte : orario - 1, $lte : orario + 1 }}, 
-                    {CondizioneAtmosferica:clima},
+                    }}, {dayOfWeek: { $eq : 1 , $eq : 7}},  
+                    {ora: { $gte : orario - 1, $lte : orario + 1 }},
+                    {CondizioneAtmosferica: clima}
                 ]
                 }
             });
@@ -73,11 +74,11 @@ App = {
         .then(function (response) {
             // let numeroDocuments = response.data.documents[0].numTotaleIncidenti;
             // return numeroDocuments
-
+            console.log(JSON.stringify(response.data.documents));
             if(response.data.documents.length > valoreSogliaFestivi ) {
-                esito = "KO"
+                esito = "Hai più probabilità di fare incidenti ("+response.data.documents.length+")";
             } else {
-                esito = "OK"
+                esito = "Vai tranquillo, rischio minore della media"
             } 
         }).catch(function (error) {
             console.log(error);
@@ -87,13 +88,3 @@ App = {
     },
 
 } 
-
-
-
-App.getCalcoloAlert(12.4185, 41.9104, false, 18, "Sereno").then((data) => {
-    // const allIncidenti = data.documents
-    console.log("Prova", data)
-    // alert(data)
-    // const totaleIncidenti = allIncidenti.length;
-    // console.log("Prova: ", allIncidenti)
-})
