@@ -8,7 +8,7 @@ try{
         
         $servizio = $_REQUEST['servizio'];
         switch($servizio) {
-            case 'findByStrada': require_once './servizi/findByStrada.php'; break;
+            case 'countIncidenti': require_once './servizi/countIncidenti.php'; break;
             default: echo json_encode(array());
         }
     }

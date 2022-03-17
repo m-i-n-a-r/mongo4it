@@ -115,6 +115,8 @@ function getMeteo($coordinate){
                 break;
                 case 'cielo coperto': $ca = "Nuvoloso";
                 break;
+                case 'poche nuvole': $ca = "Nuvoloso";
+                break;
                 case 'pioggia leggera': $ca = "Pioggia in atto";
                 break;
                 default: $ca = $meteo->weather[0]->description;
