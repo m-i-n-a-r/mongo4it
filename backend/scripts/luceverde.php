@@ -12,7 +12,7 @@ $new = array();
 foreach ($dati->features as $evento){
     $titolo = $evento->properties->what->title;
     $pos = strpos(strtolower($titolo),'incidente');
-//     $pos = strpos(strtolower($titolo),'problemi');
+//     $pos = strpos(strtolower($titolo),'traffico');
     if ($pos !== false){
         $incidente = new stdClass();
         $incidente->Protocollo = intval(date("Y").$evento->properties->id);
@@ -31,6 +31,10 @@ foreach ($dati->features as $evento){
             $geoPoint->coordinates = $evento->geometry->coordinates[0];
         }
         $incidente->geoPoint = $geoPoint;
+        $incidente->ora = intval(date('H', intval($incidente->data."")/1000));
+        $incidente->dayOfWeek = intval(date('w', intval($incidente->data."")/1000))+1;
+        
+        $incidente->municipio = getMunicipioByCoordinate($db, $geoPoint);
 
         if(getIncidenteByProtocollo($db, $incidente->Protocollo) == null && isset($geoPoint->coordinates)){
             $meteo = getMeteo($geoPoint->coordinates);
@@ -134,7 +138,7 @@ function getMeteo($coordinate){
 }
 
 function getIncidenteByProtocollo($db, $protocollo){
-    $collection = $db->luceverde;
+    $collection = $db->Incidente_Geo_Distinct;
     
     $option = array();
     $where = array();
@@ -142,6 +146,28 @@ function getIncidenteByProtocollo($db, $protocollo){
     
     $obj = $collection->findOne($where,$option);
     return $obj;
+}
+
+function getMunicipioByCoordinate($db, $geoPoint){
+    $collection = $db->Municipi;
+    
+    $option = array();
+    $where = array();
+    $where['geometry']=['$geoIntersects' => ['$geometry' => $geoPoint]];
+    
+    $option = ['projection' => [
+            'properties' => 1
+    ]
+    ];
+    
+    $obj = $collection->findOne($where,$option);
+
+    $municipio = "";
+    if ($obj != null){
+        $municipio = $obj->properties->municipio;
+    }
+    
+    return $municipio;
 }
 
 function insertIncidente($db, $incidente){
@@ -155,7 +181,7 @@ function insertIncidente($db, $incidente){
     echo "\033[96mgeoPoint.coordinates: \033[92m".$incidente->geoPoint->coordinates[0]." - ".$incidente->geoPoint->coordinates[1]."".PHP_EOL;
     echo "\033[96mCondizioneAtmosferica: \033[92m".$incidente->CondizioneAtmosferica."".PHP_EOL;
     echo "\033[96mVisibilita: \033[92m".$incidente->Visibilita."\033[39m".PHP_EOL;
-    $collection = $db->luceverde;
+    $collection = $db->Incidente_Geo_Distinct;
     
     $obj = $collection->insertOne($incidente);
     return $obj;
