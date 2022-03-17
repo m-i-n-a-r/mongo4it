@@ -6,7 +6,19 @@ const map = new mapboxgl.Map({
     zoom: 10
   });
 
+function error(){
 
+  var lat = 12.4963655;
+  var lon = 41.9027835;
+  maximumLat = 12.66 
+  minimumLat = 12.22 
+  maximumLon = 41.99 
+  minimumLon = 41.77 
+  position = '';
+  position.coords.latitude = Math.floor(Math.random() * (maximumLat - minimumLat)) + minimumLat;
+  position.coords.longitude = Math.floor(Math.random() * (maximumLon - minimumLon)) + minimumLon;
+  mia_posizione(position)
+}
   
   
   function mia_posizione(position) {
@@ -252,7 +264,7 @@ function createGraph(data){
 
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(mia_posizione);
+      navigator.geolocation.getCurrentPosition(mia_posizione, error);
     }else{
       alert('La geo-localizzazione NON è possibile');
     }
