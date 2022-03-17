@@ -2990,7 +2990,7 @@ input, select, textarea {
 			}
 
 			.spotlight .content header.major {
-				margin: 0 0 2em 0;
+				margin: 0 0 1em 0;
 			}
 
 		/* Some special attributes for the short contents (e.g. image-less projects) */
@@ -3036,8 +3036,8 @@ input, select, textarea {
 			.spotlight .image-small img {
 				display: block;
 				border-radius: 100%;
-				width: 7em;
-				height: 7em;
+				width: 6em;
+				height: 6em;
 			}
 
 		@media screen and (max-width: 980px) {

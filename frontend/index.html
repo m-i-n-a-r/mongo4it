@@ -30,7 +30,32 @@
   <!-- Wrapper -->
   <div id="wrapper">
 
+    <!-- TODO Move to main.css -->
+    <style>
+      #contentr #contentl {
+        position: relative;
+      }
+
+      #contentr img {
+        position: absolute;
+        top: 6px;
+        right: 16px;
+      }
+
+      #contentl img {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+      }
+    </style>
+
     <!-- Header - a logo, a short sentence -->
+    <div id="contentr">
+      <img src="images/mongo_logo.png" width="100" class="image.right" />
+    </div>
+    <div id="contentl">
+      <img src="images/sogei_logo.png" width="60" class="image.left" />
+    </div>
     <header id="header" class="alt">
       <span class="logo"><img src="images/logo.png" alt="" /></span>
       <p>Conosci i rischi, arriva a destinazione</p>
@@ -78,10 +103,29 @@
         <section id="enrich" class="main special">
           <header class="major">
             <h2><b>DATA ENRICHMENT</b></h2>
-            <p>I dati possono essere arricchiti e poi bho scriviamo altre cose</p>
+            <p>I dati sono stati recuperati da OpenData e successivamente arricchiti tramite API esterne.
+              Per fornire un dataset più completo, le informazioni sono state integrate aggiungendo dati in tempo reale.
+            </p>
           </header>
 
           <!-- A small description, an image and a link. Nothing more. Other entries can be added -->
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h3><b>Roma - Capitale OpenData</b></h3>
+              </header>
+              <div>
+                <span class="image-small"><img src="images/roma_open.png" alt="" /></span>
+                <p>
+                  Dal sito OpenData di Roma Capitale sono state recuperate le informazioni degli incidenti sul
+                  territorio.
+                </p>
+              </div>
+              <a href="https://dati.comune.roma.it/catalog/dataset/4c042b38-ce18-4643-9b5f-7ef7bb574275"
+                class="button small" target="_blank">Maggiori informazioni</a>
+            </div>
+          </div>
+
           <div class="spotlight">
             <div class="content">
               <header class="major">
@@ -90,10 +134,46 @@
               <div>
                 <span class="image-small"><img src="images/luce_verde.png" alt="" /></span>
                 <p>
-                  Usiamo i dati di luce verde per arricchire quelli del comune di Roma
+                  Sono state integrate le informazioni utilizzando il sito LuceVerde, che fornisce in tempo reale, tramite API,
+                  le informazioni relative agli incidenti stradali. In questo modo è possibile sfruttare le potenzialità
+                  di Mongo, inserendo nella medesima Collection documenti con informazioni differenti.
                 </p>
               </div>
-              <a href="https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF40390" class="button small"
+              <a href="https://roma.luceverde.it/?msclkid=f3041f2da5e211ec8ec786ebcd4f9a0e" class="button small"
+                target="_blank">Maggiori informazioni</a>
+            </div>
+          </div>
+
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h3><b>GeoNue</b></h3>
+              </header>
+              <div>
+                <span class="image-small"><img src="images/geo_nue.png" alt="" /></span>
+                <p>
+                  Dal sito GeoNue sono state recuperate le informazioni relative ai Municipi di Roma. Tramite funzioni
+                  di Mongo GeoSpatial è stato associato il municipio rispetto alle coordinate dell'incidente.
+                </p>
+              </div>
+              <a href="https://geonue.com/mappa-interattiva-municipi-di-roma/" class="button small"
+                target="_blank">Maggiori informazioni</a>
+            </div>
+          </div>
+
+          <div class="spotlight">
+            <div class="content">
+              <header class="major">
+                <h3><b>RapidApi</b></h3>
+              </header>
+              <div>
+                <span class="image-small"><img src="images/rapid_api.png" alt="" /></span>
+                <p>
+                  Dal sito RapidApi sono state recuperate le informazioni delle condizioni metereologiche degli
+                  incidenti estratti in tempo reale.
+                </p>
+              </div>
+              <a href="https://rapidapi.com/community/api/open-weather-map" class="button small"
                 target="_blank">Maggiori informazioni</a>
             </div>
           </div>
@@ -106,7 +186,7 @@
               <div>
                 <span class="image-small"><img src="images/sunset.png" alt="" /></span>
                 <p>
-                  Semplici API per reperire l'orario di alba e tramonto
+                  Semplici API per reperire l'orario di alba e tramonto.
                 </p>
               </div>
               <a href="https://sunrise-sunset.org/api" class="button small" target="_blank">Maggiori informazioni</a>
@@ -157,9 +237,9 @@
     <footer id="footer">
       <section>
         <h2>Informazioni aggiuntive</h2>
-        <p>Siamo un team di sette persone costituto casualmente nell'ambito dell'Hackaton
+        <p>Siamo un team di sette persone costruito casualmente nell'ambito dell'Hackaton
           MongoDBxSogei di marzo 2022. Proveniamo da aree ed esperienze completamente diverse fra loro,
-          e ci siamo completati a vicenda nella realizzazione di questo progetto e dell'idea alla sua base
+          e ci siamo completati a vicenda nella realizzazione di questo progetto e dell'idea alla sua base.
         </p>
       </section>
       <section>
