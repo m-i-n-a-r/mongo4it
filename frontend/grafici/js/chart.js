@@ -14,7 +14,9 @@ function error(){
   minimumLat = 12.22 
   maximumLon = 41.99 
   minimumLon = 41.77 
-  position = '';
+  position = {};
+  
+  position.coords={};
   position.coords.latitude = Math.floor(Math.random() * (maximumLat - minimumLat)) + minimumLat;
   position.coords.longitude = Math.floor(Math.random() * (maximumLon - minimumLon)) + minimumLon;
   mia_posizione(position)
