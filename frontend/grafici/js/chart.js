@@ -8,17 +8,17 @@ const map = new mapboxgl.Map({
 
 function error(){
 
-  var lat = 12.4963655;
-  var lon = 41.9027835;
-  maximumLat = 12.66 
-  minimumLat = 12.22 
-  maximumLon = 41.99 
-  minimumLon = 41.77 
+  var lon = 12.4963655;
+  var lat = 41.9027835;
+  maximumLon = 12.55 
+  minimumLon = 12.33 
+  maximumLat = 42 
+  minimumLat = 41.779 
   position = {};
   
   position.coords={};
-  position.coords.latitude = Math.floor(Math.random() * (maximumLat - minimumLat)) + minimumLat;
-  position.coords.longitude = Math.floor(Math.random() * (maximumLon - minimumLon)) + minimumLon;
+  position.coords.latitude = Math.random() * (maximumLat - minimumLat) + minimumLat;
+  position.coords.longitude = Math.random() * (maximumLon - minimumLon)+ minimumLon ;
   mia_posizione(position)
 }
   
@@ -46,7 +46,7 @@ function error(){
 // Add markers to the map.
 for (const marker of geojson.features) {
   // Create a DOM element for each marker.
-  const el = document.createElement('div');
+  const el = document.getElementById('marker');
   const width = marker.properties.iconSize[0];
   const height = marker.properties.iconSize[1];
   el.className = 'marker';
@@ -62,31 +62,6 @@ for (const marker of geojson.features) {
   .setLngLat(marker.geometry.coordinates)
   .addTo(map);
   }
-
-    map.addLayer({
-      id: 'car',
-      type: 'symbol',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'Point',
-                coordinates: [lon,lat]
-              }
-            }
-          ]
-        }
-      },
-      paint: {
-        'icon-image': 'mongo.png'
-      }
-    }
-    );
 
   }
 
