@@ -12,11 +12,67 @@ const map = new mapboxgl.Map({
   function mia_posizione(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    const el = document.createElement('div');
+
+    const geojson = {
+      'type': 'FeatureCollection',
+      'features': [
+      {
+      'type': 'Feature',
+      'properties': {
+      'message': 'Baz',
+      'iconSize': [40, 40]
+      },
+      'geometry': {
+      'type': 'Point',
+      'coordinates': [lon, lat]
+      }
+      }
+      ]
+      };
+// Add markers to the map.
+for (const marker of geojson.features) {
+  // Create a DOM element for each marker.
+  const el = document.createElement('div');
+  const width = marker.properties.iconSize[0];
+  const height = marker.properties.iconSize[1];
   el.className = 'marker';
-  alert(el)
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat([lat, lon]).addTo(map);
+  el.style.backgroundImage = `url(../images/mongo.png)`;
+  el.style.backgroundSize = '100%';
+   
+  el.addEventListener('click', () => {
+  window.alert(marker.properties.message);
+  });
+   
+  // Add markers to the map.
+  new mapboxgl.Marker(el)
+  .setLngLat(marker.geometry.coordinates)
+  .addTo(map);
+  }
+
+    map.addLayer({
+      id: 'car',
+      type: 'symbol',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'Point',
+                coordinates: [lon,lat]
+              }
+            }
+          ]
+        }
+      },
+      paint: {
+        'icon-image': 'mongo.png'
+      }
+    }
+    );
 
   }
 
@@ -194,14 +250,12 @@ function createGraph(data){
     
     console.log('fine map');
 
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(mia_posizione);
     }else{
       alert('La geo-localizzazione NON è possibile');
     }
-    
-    
-
 
 
 
