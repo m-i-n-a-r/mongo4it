@@ -22,11 +22,6 @@ body {
     margin-bottom: 10px;
   }
   
-  a {
-    text-decoration: none;
-    color: #2dc4b2;
-  }
-  
   #console {
     position: absolute;
     width: 240px;
@@ -34,6 +29,7 @@ body {
     padding: 10px 20px;
     background-color: white;
   }
+  
   .session {
     margin-bottom: 20px;
   }
