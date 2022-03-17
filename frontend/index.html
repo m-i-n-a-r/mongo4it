@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="grafici/css/style.css">
   <noscript>
     <link rel="stylesheet" href="assets/css/noscript.css" />
   </noscript>
@@ -96,7 +99,70 @@
 
         <!-- Other entries can be added to the list. The icons are from FontAwesome v5 -->
         <div>
-          QUI VANNO I GRAFICI E IL TOOL DI CALCOLO DI PROBABILITA' DI <strong>INCIDENTE</strong><br><br><br><br><br><br>
+          <div id='map'></div>
+          <div id='console'>
+            <h1>Motor vehicle collisions</h1>
+            <p>Data: <a href='https://data.cityofnewyork.us/Public-Safety/NYPD-Motor-Vehicle-Collisions/h9gi-nx95'>Motor vehicle collision injuries and deaths</a> in NYC, Jan 2016</p>
+            <div class='session'>
+              <h2>Casualty</h2>
+              <div class='row colors'>
+              </div>
+              <div class='row labels'>
+                <div class='label'>0</div>
+                <div class='label'>1</div>
+                <div class='label'>2</div>
+                <div class='label'>3</div>
+                <div class='label'>4</div>
+                <div class='label'>5+</div>
+              </div>
+            </div>
+            <div class='session' id='sliderbar'>
+              <h2>Hour: <label id='active-hour'>12PM</label></h2>
+              <input id='slider' class='row' type='range' min='0' max='23' step='1' value='12' />
+              <input type="checkbox" id="hourNone"/><label id='hourNone'>Tutte le ore</label>
+            </div>
+            <div class='session'>
+              <h2>Day of the week</h2>
+              <div class='row' id='filters'>
+                <input id='all' type='radio' name='day' value='all' checked='checked'>
+                <label for='all'>All</label>
+                <input id='weekday' type='radio' name='day' value='weekday'>
+                <label for='weekday'>Weekday</label>
+                <input id='weekend' type='radio' name='day' value='weekend'>
+                <label for='weekend'>Weekend</label>
+              </div>
+            </div>
+            <div class='session'>
+              <h2>Year</h2>
+              <div class='row' id='years'>
+                <input id='all' type='radio' name='toggle' value='all' checked='checked'>
+                <label for='all'>All</label>
+                <input id='2019' type='radio' name='toggle' value='2019'>
+                <label for='2019'>2019</label>
+                <input id='2020' type='radio' name='toggle' value='2020'>
+                <label for='2020'>2020</label>
+                <input id='2021' type='radio' name='toggle' value='2021'>
+                <label for='2021'>2021</label>
+              </div>
+            </div>
+            <div class='session'> 
+              <h2>Meteo</h2>
+              <div class='row' id='meteo'>
+                <select name="meteoS">
+                  <option value="All">All</option>
+                  <option value="Foschia">Foschia</option>
+                  <option value="Vento forte">Vento forte</option>
+                  <option value="Sole radente">Sole radente</option>
+                  <option value="Pioggia in atto">Pioggia in atto</option>
+                  <option value="Nuvoloso">Nuvoloso</option>
+                  <option value="Sereno">Sereno</option>
+                  <option value="Nebbia">Nebbia</option>
+                  <option value="Grandine in atto">Grandine in atto</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
 
         <!-- Data enrichment startegies -->
@@ -270,6 +336,9 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/particles.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="grafici/node_modules/axios/dist/axios.js"></script>
+  <script src="grafici/js/javascript.js"></script>
+  <script src="grafici/js/chart.js"></script>
 
   <script>
     // Variables to change to correctly generate some informations dinamically

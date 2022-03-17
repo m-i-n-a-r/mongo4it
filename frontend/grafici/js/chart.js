@@ -3,19 +3,31 @@ const map = new mapboxgl.Map({
     container: 'map', // container element id
     style: 'mapbox://styles/mapbox/light-v10',
     center: [12.4963655, 41.9027835], // initial map center in [lon, lat]
-    zoom: 12
+    zoom: 10
   });
 
 
   var queryChartMap = JSON.stringify({
-    "collection": "Incident_Geo",
+    "collection": "Incidente_Geo_Distinct",
     "database": "Hackaton",
     "dataSource": "demo",
-    "pipeline" : agg
+    "filter" : {},
+    "projection": {
+      "geometry": "$geoPoint",
+      "properties": {
+        "Coinvolti": {$sum:["$NUM_FERITI","$NUM_MORTI"]},
+        "Ora": "$ora",
+        "Giorno": "$dayOfWeek",
+        "Anno": {"$year":"$data"},
+        "Meteo": "$CondizioneAtmosferica"
+      }
+    },
+    "limit":50000
+
 });
 var queryChartMapConfig = {
     method: 'post',
-    url: 'https://data.mongodb-api.com/app/data-bcvqg/endpoint/data/beta/action/aggregate',
+    url: 'https://data.mongodb-api.com/app/data-bcvqg/endpoint/data/beta/action/find',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Request-Headers': '*',
@@ -23,20 +35,50 @@ var queryChartMapConfig = {
     },
     data : queryChartMap
 };
-axios(queryChartMapConfig)
-.then(function (response) {
-    console.log('dopo response');
-    createGraph(response.data);
-})
-.catch(function (error) {
-    console.log(error);
+
+
+
+var queryChartLayer = JSON.stringify({
+  "collection": "Municipi",
+  "database": "Hackaton",
+  "dataSource": "demo",
+  "filter" : {},
+  "projection": {
+    "geometry": 1,
+    "properties": {
+      "mun": {  '$toInt':{'$substr': [ '$id', 20, 2 ] } }
+    }
+    
+  }
+
+
 });
+var queryChartLayerConfig = {
+  method: 'post',
+  url: 'https://data.mongodb-api.com/app/data-bcvqg/endpoint/data/beta/action/find',
+  headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Request-Headers': '*',
+      'api-key': '5ZeDsX1tgu7nVn7kJV74XfGcOiN7UMjbiNX36hmEDfataprwx00krrZGrWWw0kjQ'
+  },
+  data : queryChartLayer
+};
 
-
+axios(queryChartLayerConfig)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data.documents.length));
+      createGraphMun(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 
 function createGraph(data){
     console.log('dentro createGraph');
-
+    filterHour = ['==', ['number', ['get', 'Ora']], 12];
+    filterDay = ['!=', ['number', ['get', 'Giorno']], 0];
+    filterYear = ['!=', ['number', ['get', 'Anno']], 0];
+    filterMeteo = ['!=', ['string', ['get', 'Meteo']], 'pippo'];
     map.addLayer({
       id: 'collisions',
       type: 'circle',
@@ -45,70 +87,14 @@ function createGraph(data){
         data: 
             {
                 "type": "FeatureCollection",
-                "features": [{
-                  "type": "Feature",
-                  "properties": {
-                    "Injured": 1,
-                    "Killed": 0,
-                    "Factor1": "Unspecified",
-                    "Hour": 18,
-                    "Day": "Fri",
-                    "Casualty": 1
-                  },
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [-73.9066122, 40.7453924]
-                  }
-                }, {
-                  "type": "Feature",
-                  "properties": {
-                    "Injured": 0,
-                    "Killed": 0,
-                    "Factor1": "Unspecified",
-                    "Hour": 19,
-                    "Day": "Fri",
-                    "Casualty": 0
-                  },
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [-73.8427393, 40.8794247]
-                  }
-                }, {
-                  "type": "Feature",
-                  "properties": {
-                    "Injured": 0,
-                    "Killed": 0,
-                    "Factor1": "Outside Car Distraction",
-                    "Hour": 19,
-                    "Day": "Fri",
-                    "Casualty": 0
-                  },
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [-73.9313269, 40.6605938]
-                  }
-                }, {
-                  "type": "Feature",
-                  "properties": {
-                    "Injured": 0,
-                    "Killed": 0,
-                    "Factor1": "Unspecified",
-                    "Hour": 19,
-                    "Day": "Fri",
-                    "Casualty": 0
-                  },
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [-73.8703694, 40.7334973]
-                  }
-                }]
+                "features": data.documents
         }
       },
       paint: {
         'circle-radius': [
           'interpolate',
           ['linear'],
-          ['number', ['get', 'NUM_FERITI']],
+          ['number', ['get', 'Coinvolti']],
           0,
           4,
           5,
@@ -117,7 +103,7 @@ function createGraph(data){
         'circle-color': [
           'interpolate',
           ['linear'],
-          ['number', ['get', 'NUM_FERITI']],
+          ['number', ['get', 'Coinvolti']],
           0,
           '#2DC4B2',
           1,
@@ -132,8 +118,124 @@ function createGraph(data){
           '#AA5E79'
         ],
         'circle-opacity': 0.8
+      },
+      filter: ['all', filterHour, filterDay, filterYear,filterMeteo]
+    });
+
+    document.getElementById('slider').addEventListener('input', (event) => {
+      const hour = parseInt(event.target.value);
+      // update the map
+      filterHour = ['==', ['number', ['get', 'Ora']], hour];
+      map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
+    
+      // converting 0-23 hour to AMPM format
+      const ampm = hour >= 12 ? 'PM' : 'AM';
+      const hour12 = hour % 12 ? hour % 12 : 12;
+    
+      // update text in the UI
+      document.getElementById('active-hour').innerText = hour12 + ampm;
+    });
+    document.getElementById('hourNone').addEventListener('click', (event) => {
+      const checked = event.target.checked;
+      // update the map
+      if(checked){
+        filterHour = ['!=', ['number', ['get', 'Ora']], 25];
       }
+      else{
+        hour = parseInt(document.getElementById('slider').value);
+        filterHour = ['==', ['number', ['get', 'Ora']], hour];
+      }
+      
+      map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
+    });
+    document.getElementById('filters').addEventListener('change', (event) => {
+      const day = event.target.value;
+      if (day === 'all') {
+        filterDay = ['!=', ['number', ['get', 'Giorno']], 0];
+      } else if (day === 'weekday') {
+        filterDay = ['match', ['get', 'Giorno'], [7, 1], false, true];
+      } else if (day === 'weekend') {
+        filterDay = ['match', ['get', 'Giorno'], [7, 1], true, false];
+      } else {
+        console.log('error');
+      }
+      map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
+    });
+    document.getElementById('years').addEventListener('change', (event) => {
+      year = event.target.value;
+      year = parseInt(year);
+      filterYear = ['==', ['number', ['get', 'Anno']], year];
+      map.setFilter('collisions', ['all', filterHour, filterDay, filterYear]);
+    });
+    document.getElementById('meteo').addEventListener('change', (event) => {
+      meteo = event.target.value;
+      filterMeteo = ['==', ['string', ['get', 'Meteo']], meteo];
+      map.setFilter('collisions', ['all', filterHour, filterDay, filterYear,filterMeteo]);
     });
     
     console.log('fine map');
+
+
+    
+    
+
+
+
+
+
+
+
+    
+
+
+
+
+}
+
+function createGraphMun(data){
+  console.log(JSON.stringify(data.documents.length));
+var dati = data.documents;
+
+
+  map.addLayer(
+    {
+      'id': 'isoLayer',
+      'type': 'fill',
+      'source': {
+        type: 'geojson',
+        data: {
+          "type": "FeatureCollection",
+          "features": data.documents
+        }
+      },
+      'layout': {},
+      'paint': {
+        'fill-color': [
+          'case',
+          ['!=', ['get', 'mun'], null],
+          [
+            'interpolate',
+            ['linear'],
+            ['get', 'mun'],
+            1,
+            'rgba(222,235,247,1)',
+            16,
+            'rgba(49,130,189,1)'
+          ],
+          'rgba(255, 255, 255, 0)'
+        ],
+        'fill-opacity': 0.5
+      }
+    }
+  );
+
+  
+axios(queryChartMapConfig)
+.then(function (response) {
+    console.log(JSON.stringify(response.data.documents));
+    createGraph(response.data);
+})
+.catch(function (error) {
+    console.log(error);
+});
 }
