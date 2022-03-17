@@ -1,85 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="./css/style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
-    <div id='map'></div>
-    <div id='marker'></div>
-    <div id='console'>
-      <h1>Incidenti stradali</h1>
-      
-    <div id='pippo'></div>
+  <div id='map'></div>
+  <div id='marker'></div>
+  <div id='console'  style="border-radius: 24px;">
+    <div id='pippo' style="text-align: center;"><strong>Inserisci le condizioni per calcolare i rischi</strong></div>
+    <div class='session'>
+      <h2>Persone lese</h2>
+      <div class='row colors'>
+      </div>
+      <div class='row labels'>
+        <div class='label'>0</div>
+        <div class='label'>1</div>
+        <div class='label'>2</div>
+        <div class='label'>3</div>
+        <div class='label'>4</div>
+        <div class='label'>5+</div>
+      </div>
+    </div>
+    <div class='session' id='sliderbar'>
+      <h2>Orario: <label id='active-hour'>12PM</label></h2>
+      <input id='slider' class="slider" type='range' min='0' max='23' step='1' value='12' />
+      <input type="checkbox" style="accent-color: #049A41;" id="hourNone" /><label id='hourNone'>Tutte le ore</label>
+    </div>
+    <div class='session'>
+      <h2>Giornata</h2>
+      <div class='row' id='filters'>
+        <input id='all' type='radio' style="accent-color: #049A41;" name='day' value='all' checked='checked'>
+        <label for='all'>Tutti</label>
+        <input id='weekday' type='radio' style="accent-color: #049A41;" name='day' value='weekday'>
+        <label for='weekday'>Feriali</label>
+        <input id='weekend' type='radio' style="accent-color: #049A41;" name='day' value='weekend'>
+        <label for='weekend'>Festivi</label>
+      </div>
+    </div>
+    <div class='session'>
+      <h2>Anno</h2>
+      <div class='row' id='years'>
+        <input id='all' type='radio' style="accent-color: #049A41;" name='toggle' value='all' checked='checked'>
+        <label for='all'>Tutto</label>
+        <input id='2019' type='radio' style="accent-color: #049A41;" name='toggle' value='2019'>
+        <label for='2019'>2019</label>
+        <input id='2020' type='radio' style="accent-color: #049A41;" name='toggle' value='2020'>
+        <label for='2020'>2020</label>
+        <br>
+        <input id='2021' type='radio' style="accent-color: #049A41;" name='toggle' value='2021'>
+        <label for='2021'>2021</label>
+        <input id='2021' type='radio' style="accent-color: #049A41;" name='toggle' value='2022'>
+        <label for='2021'>2022 (dati RealTime)</label>
+      </div>
+    </div>
+    <br>
+    <div class='session'>
+      <h2>Meteo</h2>
+      <div class="options" id='meteo'>
+        <select name="meteoS" id="meteoS">
+          <option value="All">Tutti</option>
+          <option value="Foschia">Foschia</option>
+          <option value="Vento forte">Vento forte</option>
+          <option value="Sole radente">Sole radente</option>
+          <option value="Pioggia in atto">Pioggia in atto</option>
+          <option value="Nuvoloso">Nuvoloso</option>
+          <option value="Sereno">Sereno</option>
+          <option value="Nebbia">Nebbia</option>
+          <option value="Grandine in atto">Grandine in atto</option>
+        </select>
+      </div>
       <div class='session'>
-        <h2>Persone lese</h2>
-        <div class='row colors'>
+        <h2>Randomizza localizzazione</h2>
+        <div>
+          <img src='../images/car.png' onclick="error()" width="50px" height="50px">
         </div>
-        <div class='row labels'>
-          <div class='label'>0</div>
-          <div class='label'>1</div>
-          <div class='label'>2</div>
-          <div class='label'>3</div>
-          <div class='label'>4</div>
-          <div class='label'>5+</div>
-        </div>
-      </div>
-      <div class='session' id='sliderbar'>
-        <h2>Orario: <label id='active-hour'>12PM</label></h2>
-        <input id='slider' class='row' type='range' min='0' max='23' step='1' value='12' />
-        <input type="checkbox" id="hourNone"/><label id='hourNone'>Tutte le ore</label>
-      </div>
-      <div class='session'>
-        <h2>Giornata</h2>
-        <div class='row' id='filters'>
-          <input id='all' type='radio' name='day' value='all' checked='checked'>
-          <label for='all'>Tutti</label>
-          <input id='weekday' type='radio' name='day' value='weekday'>
-          <label for='weekday'>Feriali</label>
-          <input id='weekend' type='radio' name='day' value='weekend'>
-          <label for='weekend'>Festivi</label>
-        </div>
-      </div>
-      <div class='session'>
-        <h2>Anno</h2>
-        <div class='row' id='years'>
-          <input id='all' type='radio' name='toggle' value='all' checked='checked'>
-          <label for='all'>All</label>
-          <input id='2019' type='radio' name='toggle' value='2019'>
-          <label for='2019'>2019</label>
-          <input id='2020' type='radio' name='toggle' value='2020'>
-          <label for='2020'>2020</label>
-          <input id='2021' type='radio' name='toggle' value='2021'>
-          <label for='2021'>2021</label>
-          <input id='2021' type='radio' name='toggle' value='2022'>
-          <label for='2021'>2022(dati RealTime)</label>
-        </div>
-      </div>
-      <div class='session'> 
-        <h2>Meteo</h2>
-        <div class='row' id='meteo'>
-          <select name="meteoS" id="meteoS">
-            <option value="All">Tutti</option>
-            <option value="Foschia">Foschia</option>
-            <option value="Vento forte">Vento forte</option>
-            <option value="Sole radente">Sole radente</option>
-            <option value="Pioggia in atto">Pioggia in atto</option>
-            <option value="Nuvoloso">Nuvoloso</option>
-            <option value="Sereno">Sereno</option>
-            <option value="Nebbia">Nebbia</option>
-            <option value="Grandine in atto">Grandine in atto</option>
-          </select>
-        </div>
-        <div class='session'> 
-          <h2>Loc</h2>
-          <div class='row' id='meteo'>
-            <input type="button" id="loc" onclick="error()">
-          </div>
       </div>
     </div>
   </div>
@@ -88,4 +90,5 @@
 <script src="./js/javascript.js"></script>
 <script src="./js/chart.js"></script>
 <script src="./js/calcoliAlert.js"></script>
+
 </html>
