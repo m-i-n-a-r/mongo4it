@@ -360,9 +360,9 @@ function createGraphMun(data) {
             ['linear'],
             ['get', 'mun'],
             1,
-            '#049A41',
+            '#000000',
             16,
-            '#112E2C'
+            '#ffffff'
           ],
           'rgba(255, 255, 255, 0)'
         ],
@@ -475,7 +475,7 @@ async function getRoute(end) {
   const data = json.routes[0];
   const route = data.geometry.coordinates;
 
-
+console.log(JSON.stringify(route))
   const geojson = {
     type: 'Feature',
     properties: {},
@@ -502,13 +502,44 @@ async function getRoute(end) {
         'line-cap': 'round'
       },
       paint: {
-        'line-color': '#3887be',
+        'line-color': 'green',
         'line-width': 5,
         'line-opacity': 0.75
       }
     });
   }
   // add turn instructions here at the end
+
+  
+  var listaAnni = document.getElementsByName("toggle")
+  var anno
+  var i;
+  for (i = 0; i < listaAnni.length; i++) {
+    if (listaAnni[i].checked) {
+      anno = listaAnni[i].value;
+    }
+  }
+
+  //alert('anno' + anno)
+  if (!anno || anno == "all") {
+    anno = null
+  }
+  ora = document.getElementById('slider').value;
+  giorno = document.getElementById('filters').value;
+
+  meteoS =GetSelectedValue('meteoS');
+  if(!meteoS || meteoS == "All"){
+    meteoS = "Sereno"
+  }
+
+  giornoBool = giorno == 'Feriali';
+  App.getCalcoloPercorsoAlert(route, giornoBool, ora, meteoS, anno).then((data) => {
+
+    
+    // const allIncidenti = data.documents
+    console.log("Prova 2", data)
+     document.getElementById('end').innerHTML="Percorso: "+data;
+})
 }
 
 
