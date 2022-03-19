@@ -7,7 +7,7 @@ A case study based on **Rome Open Data** and **MongoDB**, to derive a measure of
 </p>
 
 ## Introduction
-The idea of this project is to provide improve the danger awareness and provide a "safer route" when driving in big cities like Rome, which also provide Open Data and live services to assemble a complete and statistically relevant dataset. On top of that, the repository contains a responsive site, made as an example. Another great application of such idea is a mobile app (or a car embedded app).
+The idea of this project is to improve the danger awareness and provide a "safer route" when driving in big cities like Rome, which also provide Open Data and live services to assemble a complete and statistically relevant dataset. On top of that, the repository contains a responsive site, made as an example. Another great application of such idea is a mobile app (or a car embedded app).
 
 ## The team
 | NAME                    | ROLE                              |
