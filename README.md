@@ -1,6 +1,6 @@
 # MonGO4it
 
-A case study based on **Rome Open Data** and **MongoDB**, to derive a measure of car **accident risk** on a point or a route for a set of conditions, from a series of enriched data from multiple **additional sources**. Plus some nice **UI** and **charts**. Coded in a hurry in **2 days**!
+A case study based on **Rome Open Data** and **MongoDB**, to derive a measure of car **accident risk** on a point or a route for a set of conditions, from a series of enriched data from multiple **additional sources**. Plus some nice **UI** and **charts**. Coded in a hurry in a **2 days** Hackathon!
 
 <p align='center'>
 	<img src='https://img.shields.io/badge/result-winner!-darkgreen'/>
@@ -23,4 +23,5 @@ The idea of this project is to improve the danger awareness and provide a "safer
 
 ## Special thanks
 
-Kudos to the MongoDB Team for helping us and for the Hackaton itself! 
+Kudos to the MongoDB Team for helping us and for the Hackathon itself! 
+Please note: all the credentials you may find inside are now expired or invalid, so don't mind them.
